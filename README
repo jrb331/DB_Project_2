@@ -1,0 +1,39 @@
+This file describes the data in the different data files.  
+You must create all the tables from the relational model posted
+on Canvas.
+You only populate the tables that have data in this directory.
+So you will have a lot of tables that are not populated.  
+Make sure those tables also have constraints specified. 
+For foreign keys, you can use any form of cascading you want.
+Do not delete columns that I have not provided data for.  Just
+set them to allow for NULLs. If one of the tables you have 
+data for needs a primary key and I did not provide it, 
+you can generate one in postgres using the serial data type
+or creating your own sequence.
+
+There is bad data in some of the files.  This was done by
+design.  So this is something that you need to deal with.  
+You should load all the data into temp tables (possibly 
+using different data types for some fields) and then 
+you should add only the good data to the final tables. 
+You will do that using sql.  If you choose to clean the 
+files in linux, you will get some credit for that, but 
+less than if you do it in postgres.  I know you can do it 
+easily in linux.  I want you to practice doing this in 
+postgres using sql.
+
+What do you need to clean:
+- Standardize capitalization across fields that need it
+- If fields should be numeric, only numeric values should be in the results.
+- Emails should have a '@' and a valid domain (e.g. .com or .edu)
+- You do not need to clean typos
+- You should standarize capitalization if it makes sense. For example, states.
+
+users.csv - These are people who are using the site.
+FIELDS: first_name,last_name,username,email,street_address,city,state
+
+products.csv - The products that different companies sell
+product id|product name|brand/company name|product category
+
+services.csv - The services that different companies offer
+service id|service name|brand/company name|service category
