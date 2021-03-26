@@ -12,15 +12,15 @@ customer_state_address VARCHAR(20));
 -- load data into temp_customer
 
 \copy temp_customer(customer_first_name, customer_last_name, customer_id,
-   customer_email, customer_street_address, customer_city_address,
-    customer_state_address)
+  customer_email, customer_street_address, customer_city_address,
+  customer_state_address)
 FROM '/home/jrb331/DB_Project_2/users.csv'
 WITH DELIMITER ','
 
 --create temporary service file
 
 CREATE TABLE TEMP_SERVICE (item_id VARCHAR(10), item_name VARCHAR(400),
- item_brand VARCHAR(100), item_category VARCHAR(100));
+item_brand VARCHAR(100), item_category VARCHAR(100));
 
 --load data into temporary service
 
@@ -31,7 +31,7 @@ WITH DELIMITER ',' CSV QUOTE '"';
 --create temporary product table
 
 CREATE TABLE TEMP_PRODUCT (item_id VARCHAR(10), item_name VARCHAR(400),
- item_brand VARCHAR(100), item_category VARCHAR(100));
+item_brand VARCHAR(100), item_category VARCHAR(100));
 
 -- create extra temporary product file to load unsplit data
 
@@ -46,10 +46,10 @@ FROM '/home/jrb331/DB_Project_2/products.csv';
 -- split data by '|' and insert into temp_product
 INSERT INTO temp_product
 SELECT split_part(all_data, '|', 1)
- product_id, split_part(all_data, '|', 2)
-  product_name, split_part(all_data, '|', 3)
-   product_brand, split_part(all_data, '|', 4)
-    product_category
+product_id, split_part(all_data, '|', 2)
+product_name, split_part(all_data, '|', 3)
+product_brand, split_part(all_data, '|', 4)
+product_category
 FROM  very_temp_product;
 
 --clean customer file for consistent capitalization
