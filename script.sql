@@ -159,12 +159,10 @@ CREATE TABLE temp_company (company_name VARCHAR(50));
 ALTER TABLE temp_company ADD COLUMN ID SERIAL PRIMARY KEY;
 
 --insert companies from product file removing duplicates
-INSERT INTO temp_company (company_name)
-(SELECT DISTINCT item_brand FROM temp_product);
+INSERT INTO temp_company (company_name) (SELECT DISTINCT item_brand FROM temp_product);
 
 --insert companies from service file removing duplicates
-INSERT INTO temp_company (company_name)
-(SELECT DISTINCT item_brand FROM temp_service);
+INSERT INTO temp_company (company_name) (SELECT DISTINCT item_brand FROM temp_service);
 
 --create final company table
 CREATE TABLE COMPANY (
@@ -176,9 +174,9 @@ company_contact_email VARCHAR(40) ,
 url VARCHAR(50) UNIQUE,
 PRIMARY KEY (company_id));
 
---copy temp_company into company
+--copy temp_company into company, removing duplicates for companies with products and services
 INSERT INTO company(company_id, company_name)
-SELECT id, company_name
+SELECT DISTINCT id, company_name
 FROM temp_company;
 
 --create a temporary discount table
@@ -276,13 +274,13 @@ CREATE TABLE temp_company_item ( company_id VARCHAR(10) ,
 
 --insert company-item pairs from service table
 INSERT INTO temp_company_item (item_id, company_id)
-(SELECT item_id, company_id
+(SELECT DISTINCT item_id, company_id
   FROM temp_service, company
   WHERE item_brand = company_name);
 
 --insert company-item pairs from product table
 INSERT INTO temp_company_item (item_id, company_id)
-(SELECT item_id, company_id
+(SELECT DISTINCT item_id, company_id
   FROM temp_product, company
   WHERE item_brand = company_name);
 
@@ -310,7 +308,7 @@ FOREIGN KEY (discount_id) REFERENCES DISCOUNT(discount_id));
 
 --copy temp_company_item into company_item
 INSERT INTO COMPANY_ITEM (company_id, item_id, is_discounted, discount_id)
-(SELECT company_id, item_id, is_discounted, discount_id FROM temp_company_item);
+(SELECT DISTINCT company_id, item_id, is_discounted, discount_id FROM temp_company_item);
 
 --create the first view
 CREATE VIEW view_discount_dates AS
