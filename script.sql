@@ -11,11 +11,7 @@ customer_state_address VARCHAR(20));
 
 -- load data into temp_customer
 
-\copy temp_customer(customer_first_name, customer_last_name, customer_id,
-  customer_email, customer_street_address, customer_city_address,
-  customer_state_address)
-FROM '/home/jrb331/DB_Project_2/users.csv'
-WITH DELIMITER ','
+\copy temp_customer(customer_first_name, customer_last_name, customer_id, customer_email, customer_street_address, customer_city_address, customer_state_address) FROM '/home/jrb331/DB_Project_2/users.csv' WITH DELIMITER ',';
 
 --create temporary service file
 
@@ -24,9 +20,7 @@ item_brand VARCHAR(100), item_category VARCHAR(100));
 
 --load data into temporary service
 
-\copy temp_service(item_id, item_name, item_brand, item_category)
-FROM '/home/jrb331/DB_Project_2/services.csv'
-WITH DELIMITER ',' CSV QUOTE '"';
+\copy temp_service(item_id, item_name, item_brand, item_category) FROM '/home/jrb331/DB_Project_2/services.csv' WITH DELIMITER ',' CSV QUOTE '"';
 
 --create temporary product table
 
@@ -39,8 +33,7 @@ CREATE TABLE VERY_TEMP_PRODUCT ( all_data VARCHAR(400));
 
 -- load data into single column
 
-\copy very_temp_product(all_data)
-FROM '/home/jrb331/DB_Project_2/products.csv';
+\copy very_temp_product(all_data) FROM '/home/jrb331/DB_Project_2/products.csv';
 
 
 -- split data by '|' and insert into temp_product
