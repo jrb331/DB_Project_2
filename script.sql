@@ -156,7 +156,6 @@ INSERT INTO item (item_id, item_type, item_name, item_description)
 --create a temporary company table and generate IDs for keys
 CREATE TABLE temp_company (company_name VARCHAR(50));
 
-ALTER TABLE temp_company ADD COLUMN ID SERIAL PRIMARY KEY;
 
 --insert companies from product file removing duplicates
 INSERT INTO temp_company (company_name) (SELECT DISTINCT item_brand FROM temp_product);
@@ -164,7 +163,15 @@ INSERT INTO temp_company (company_name) (SELECT DISTINCT item_brand FROM temp_pr
 --insert companies from service file removing duplicates
 INSERT INTO temp_company (company_name) (SELECT DISTINCT item_brand FROM temp_service);
 
---create final company table
+CREATE TABLE FINAL_COMPANY (company_name VARCHAR(50));
+
+ALTER TABLE FINAL_COMPANY ADD COLUMN ID SERIAL PRIMARY KEY;
+
+
+INSERT INTO FINAL_COMPANY (company_id, company_name) (SELECT DISTINCT company_name from temp_company);
+
+
+--create company table with restraints
 CREATE TABLE COMPANY (
 company_id VARCHAR(10) NOT NULL,
 company_name VARCHAR(50) ,
@@ -174,10 +181,10 @@ company_contact_email VARCHAR(40) ,
 url VARCHAR(50) UNIQUE,
 PRIMARY KEY (company_id));
 
---copy temp_company into company, removing duplicates for companies with products and services
+--copy final_company into company, removing duplicates for companies with both products and services
 INSERT INTO company(company_id, company_name)
 SELECT DISTINCT id, company_name
-FROM temp_company;
+FROM FINAL_COMPANY;
 
 --create a temporary discount table
 CREATE TABLE temp_discount (discount_type VARCHAR(20) ,
