@@ -168,7 +168,7 @@ CREATE TABLE FINAL_COMPANY (company_name VARCHAR(50));
 ALTER TABLE FINAL_COMPANY ADD COLUMN ID SERIAL PRIMARY KEY;
 
 
-INSERT INTO FINAL_COMPANY (company_id, company_name) (SELECT DISTINCT company_name from temp_company);
+INSERT INTO FINAL_COMPANY (id, company_name) (SELECT DISTINCT company_name from temp_company);
 
 
 --create company table with restraints
